@@ -43,9 +43,6 @@ public:
 	void addBack(int);
 	int getFront();
 	int removeFront();
-	/*void add(int);
-	int remove();
-	void display();*/
 };
 
 

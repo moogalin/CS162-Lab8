@@ -10,7 +10,6 @@
 **		indicating the results.
 ******************************************************************************************/
 
-
 #include "CircularQueue.hpp"
 #include <string>
 #include <sstream>
@@ -37,15 +36,16 @@ int menu() {
 	bool flag = false;
 
 	do {
+		cout << endl;
 		cout << "Circular Queue Menu" << endl;
-		cout << "Please enter \"letter)\" or for a: \"a) integer\" " << endl;
-		cout << "Include a space after the parenthesis." << endl;
-		cout << "a) Enter a value" << endl;
-		cout << "b) Display first value" << endl;
-		cout << "c) Remove a value" << endl;
-		cout << "d) Display the queue contents" << endl;
-		cout << "x) Exit" << endl;
-		cout << "Choice: ";
+		cout << " Please enter \"letter)\" or for a: \"a) integer\" " << endl;
+		cout << " Include a space after the parenthesis." << endl;
+		cout << " a) Enter a value" << endl;
+		cout << " b) Display first value" << endl;
+		cout << " c) Remove a value" << endl;
+		cout << " d) Display the queue contents" << endl;
+		cout << " x) Exit" << endl;
+		cout << "\n Choice: ";
 		std::getline(cin, num);
 
 		string parseVal = " ";
@@ -53,57 +53,51 @@ int menu() {
 		num.erase(0, num.find(parseVal) + 1);
 
 		if (input == "a)") {
-			cout << "You chose a)" << endl;
 			flag = true;
-			for (int i = 0; i < num.length(); i++) {
+			int count = 0;
+			for (size_t i = 0; i < num.length(); i++) {
 				if (isdigit(num[i])) {
 				}
 				else {
-					cout << "Please follow \"a)\" with an integer "<< endl;
+					if (count == 0) {
+						cout << endl << "Please follow \"a)\" with an integer " << endl;
+						count++;
+					}
 					flag = false;
 				}
 			}
 			
 		}
 		else if (input == "b)") {
-			//cout << "You chose b)" << endl;
 			flag = true;
 			num = "-2";
 		}
 		else if (input == "c)") {
-			//cout << "You chose c)" << endl;
 			flag = true;
 			num = "-3";
 		}
 		else if (input == "d)") {
-			//cout << "You chose d)" << endl;
 			flag = true;
 			num = "-4";
 		}
 		else if (input == "x)") {
-			//cout << "You chose x)" << endl;
 			flag = true;
 			num = "-5";
 		}
 		else {
-			//cout << "Went here" << endl;
 		}
 	} while (flag == false);
 
 	int value;
-	std::istringstream(num) >> value;
+	std::istringstream(num) >> value;				//convert string "num" to int value
 
-
-
-	cout << "Num is: " << num << endl;
-	cout << "Input is: " << input << endl;
 	return value;
 }
 
 
 
 /******************************************************************************************
-** Function: Menu
+** Function: Main
 ** Description: Main will call CircularQueue functions for display, add, or remove integers
 **		and display results until the user chooses to exit. 
 ** Parameters: N/A
@@ -111,13 +105,13 @@ int menu() {
 ** Post-Conditons: N/A
 ******************************************************************************************/
 int main() {
-	int s1;
-	Queue q1;
+	int s1;											//create menu option
+	Queue q1;										//create Queue
 
 	do {
 		s1 = menu();
 
-		if (s1 == -2) {
+		if (s1 == -2) {								//Display front value
 			if (q1.getFront() == -1) {
 				cout << "First Value: N/A (The queue is empty) " << endl;
 			}
@@ -126,32 +120,43 @@ int main() {
 			}
 		}
 
-		else if (s1 == -3) {
+		else if (s1 == -3) {						//Remove front value
 			int removeStatus = q1.removeFront();
 			if (removeStatus == -1) {
-				cout << "Removal of value unsuccessful. " << endl;
-				cout << "\n Nothing to remove." << endl;
+				cout << "Removal unsuccessful. " << endl;
+				cout << " Nothing to remove." << endl;
+			}
+			else {
+				cout << "Removed: " << removeStatus << endl;
 			}
 		}
 
-		else if (s1 == -4) {
-			do {
-				cout << q1.removeFront() << " ";
-			} while (!(q1.getFront() == -1));
+		else if (s1 == -4) {						//Display and Remove all values
+			if (q1.getFront() == -1) {
+				cout << "The queue is empty, we cannot remove a value from the front." << endl;
+			}
+			while (q1.getFront() != -1) {
+				cout << "Removed: " << q1.removeFront() << " ";
+			}
+			
 			cout << endl;
 		}
 
-		else if ( s1 > 0) {
-			cout << s1 << " successfully added." << endl;
+		else if ( s1 > 0) {							//Add value to back
 			q1.addBack(s1);
+			cout << " The integer " << s1 << " successfully added." << endl;
+
 		}
 
 		else {
 
 		}
-	} while (!(s1 == -5));
+	} while (!(s1 == -5));							//Quit
 
-	cout << "Goodbye" << endl;
+
 
 	return 0;
+
+
 }
+
